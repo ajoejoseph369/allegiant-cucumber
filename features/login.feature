@@ -1,12 +1,13 @@
-Feature: The Internet Guinea Pig Website
+Feature: Test Allegiant website
 
-  Scenario Outline: As a user, I can log into the secure area
+  Scenario: Close overlay alert
+    Given user is on the homepage
+    When user is displayed with an overlay
+    When user clicks close button
+    Then overlay alert is closed
 
-    Given I am on the login page
-    When I login with <username> and <password>
-    Then I should see a flash message saying <message>
-
-    Examples:
-      | username | password             | message                        |
-      | tomsmith | SuperSecretPassword! | You logged into a secure area! |
-      | foobar   | barfoo               | Your username is invalid!      |
+  Scenario: Accept cookies
+    Given user is already on the homepage
+    When user is asked to accept cookies
+    When user clicks Accept cookies
+    Then cookies banner is closed

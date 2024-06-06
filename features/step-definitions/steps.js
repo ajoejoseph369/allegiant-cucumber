@@ -1,23 +1,41 @@
 const { Given, When, Then } = require('@wdio/cucumber-framework');
-const { expect, $ } = require('@wdio/globals')
 
-const LoginPage = require('../pageobjects/login.page');
-const SecurePage = require('../pageobjects/secure.page');
+const Page = require("../pageobjects/page.js");
 
-const pages = {
-    login: LoginPage
-}
 
-Given(/^I am on the (\w+) page$/, async (page) => {
-    await pages[page].open()
+//overlay promotion
+Given(/^user is on the homepage$/, async () => {
+	await Page.goToPage();
 });
 
-When(/^I login with (\w+) and (.+)$/, async (username, password) => {
-    await LoginPage.login(username, password)
+When(/^user is displayed with an overlay$/, async() => {
+	await Page.checkOverlayPresence();
 });
 
-Then(/^I should see a flash message saying (.*)$/, async (message) => {
-    await expect(SecurePage.flashAlert).toBeExisting();
-    await expect(SecurePage.flashAlert).toHaveTextContaining(message);
+When(/^user clicks close button$/, async () => {
+    await Page.closeAlert();
 });
 
+Then(/^overlay alert is closed$/, () => {
+	return (Page.checkClosureOfOverlay());
+});
+
+//cookies acceptance
+
+
+Given(/^user is already on the homepage$/, async () => {
+	return true;
+});
+
+
+When(/^user is asked to accept cookies$/, async () => {
+	await Page.checkCookieDialogue();
+});
+
+When(/^user clicks Accept cookies$/, async () => {
+	await Page.acceptCookies();
+});
+
+Then(/^cookies banner is closed$/, async () => {
+	await Page.checkCookieBannerClosure();
+});
