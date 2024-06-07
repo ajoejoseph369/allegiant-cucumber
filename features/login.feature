@@ -11,3 +11,14 @@ Feature: Test Allegiant website
     When user is asked to accept cookies
     When user clicks Accept cookies
     Then cookies banner is closed
+
+  Scenario: The user is trying to book a flight
+    Given user is already on the homepage
+    When user selects <origin> for Departure Airport
+    Then user selects <destination> for Destination Airport
+    Then user selects first available date
+    Then success
+
+    Examples:
+      | origin                 | destination         |
+      | Akron-Canton, OH (CAK) | Las Vegas, NV (LAS) |

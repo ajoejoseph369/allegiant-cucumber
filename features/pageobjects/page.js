@@ -1,9 +1,16 @@
 const {$} = require('@wdio/globals');
+const {Key} = require('webdriverio');
 
 const overlay = '//*[@class="Box-s8oj9r-0 hzaPoz"]';
 const closebtn = '//*[@data-hook="overlay-merchandise_ice-pop_close"]';
 const cookieBanner = '//*[@id="onetrust-banner-sdk"]';
 const acceptAllCookiesBtn = '//*[@id="onetrust-accept-btn-handler"]';
+const flightOrigin = '//*[@id="select-origin"]';
+const flightDestination = '//*[@id="select-destination"]';
+const calendar = "//*[@data-hook='flight-search-date-picker_calendars']";
+const datePicker = "//*[@data-hook='flight-search-date-picker_expand-start-date']";
+const availableDate = "//*[@class='Day-a047d8-0 iUGdrC']";
+
 
 class Page{
     async goToPage(){
@@ -27,7 +34,6 @@ class Page{
         else {
             console.log('Overlay alert was not open.');
         }
-        await browser.pause(4000);
     }
 
     async checkClosureOfOverlay(){
@@ -58,7 +64,6 @@ class Page{
         else{
             console.log('Cookies banner not displayed!');
         }
-        await browser.pause(20000);
     }
 
     async checkCookieBannerClosure(){
@@ -71,6 +76,31 @@ class Page{
             return true;
         }
     }
+
+    async selectOrigin(origin){
+        await $(flightOrigin).setValue(origin);
+        await browser.keys([Key.Enter]);
+    }
+
+    async selectDestination(destination){
+        await $(flightDestination).waitForEnabled({timeout: 3000});
+        await $(flightDestination).setValue(destination);
+        await browser.keys([Key.Enter]);
+        await browser.pause(3000);
+    }
+
+    async selectFirstAvailableDate(){
+        await $(datePicker).click();
+        await $(calendar).isDisplayed();
+        const buttons = await $$('.Day-a047d8-0 iUGdrC');
+        for(const button of buttons){
+            if(await button.isEnabled()){
+                await button.click();
+                break;
+            }
+        }
+        await browser.pause(4000);
+    }
 }
 
-module.exports = new Page();
+module.exports = new Page();    

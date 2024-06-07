@@ -39,3 +39,24 @@ When(/^user clicks Accept cookies$/, async () => {
 Then(/^cookies banner is closed$/, async () => {
 	await Page.checkCookieBannerClosure();
 });
+
+
+//flight search
+
+When(/^user selects (.*) for Departure Airport$/, async (origin) => {
+	await Page.selectOrigin(origin);
+});
+
+Then(/^user selects (.*) for Destination Airport$/, async (destination) => {
+	await Page.selectDestination(destination);
+});
+
+
+Then(/^user selects first available date$/, async () => {
+	await Page.selectFirstAvailableDate();
+});
+
+
+Then(/^success$/, async () => {
+	return true;
+});
