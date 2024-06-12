@@ -54,6 +54,7 @@ Then(/^user selects (.*) for Destination Airport$/, async (destination) => {
 
 Then(/^user selects first available date$/, async () => {
 	await Page.selectFirstAvailableDate();
+	//await Page.showAvailableDates();
 });
 
 

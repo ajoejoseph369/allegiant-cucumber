@@ -20,5 +20,6 @@ Feature: Test Allegiant website
     Then success
 
     Examples:
-      | origin                 | destination         |
-      | Akron-Canton, OH (CAK) | Las Vegas, NV (LAS) |
+      | origin                 | destination                       |
+      | Asheville, NC (AVL)    | Daytona Beach / Sanford, FL (SFB) |
+      | Akron-Canton, OH (CAK) | Las Vegas, NV (LAS)               |

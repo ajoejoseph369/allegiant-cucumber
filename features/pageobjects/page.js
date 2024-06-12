@@ -1,7 +1,7 @@
 const {$} = require('@wdio/globals');
 const {Key} = require('webdriverio');
 
-const overlay = '//*[@class="Box-s8oj9r-0 hzaPoz"]';
+const overlay = '//*[@overlay-merchandise_ice-pop_content]';
 const closebtn = '//*[@data-hook="overlay-merchandise_ice-pop_close"]';
 const cookieBanner = '//*[@id="onetrust-banner-sdk"]';
 const acceptAllCookiesBtn = '//*[@id="onetrust-accept-btn-handler"]';
@@ -9,8 +9,7 @@ const flightOrigin = '//*[@id="select-origin"]';
 const flightDestination = '//*[@id="select-destination"]';
 const calendar = "//*[@data-hook='flight-search-date-picker_calendars']";
 const datePicker = "//*[@data-hook='flight-search-date-picker_expand-start-date']";
-const availableDate = "//*[@class='Day-a047d8-0 iUGdrC']";
-
+const dateButtons = 'button[data-hook^="flight-search-date-picker_calendar-0_select-day-"]';
 
 class Page{
     async goToPage(){
@@ -92,14 +91,37 @@ class Page{
     async selectFirstAvailableDate(){
         await $(datePicker).click();
         await $(calendar).isDisplayed();
-        const buttons = await $$('.Day-a047d8-0 iUGdrC');
+        
+        const buttons = await $$(dateButtons);
         for(const button of buttons){
+            await button.isDisplayed();
             if(await button.isEnabled()){
-                await button.click();
-                break;
+                if(await button.isClickable()){
+                    const ariaLabel = await button.getAttribute('aria-label');
+                    console.log(`Button with label "${ariaLabel}" is enabled!`);
+                    await button.click();
+                    break;
+                }
             }
         }
         await browser.pause(4000);
+    }
+
+    async showAvailableDates(){
+        await $(datePicker).click();
+        await $(calendar).isDisplayed();
+        
+        const buttons = await $$(dateButtons);
+        
+        for(const button of buttons){
+            const ariaLabel = await button.getAttribute('aria-label');
+            await button.isDisplayed();
+            if(await button.isEnabled()){
+                if(await button.isClickable()){
+                    console.log(`"${ariaLabel}"`);
+                }
+            }
+        }
     }
 }
 
