@@ -20,5 +20,20 @@ Feature: Test Allegiant website
     Then user is redirected to results page
 
     Examples:
-      | origin                 | destination                       |
-      | Asheville, NC (AVL)    | Daytona Beach / Sanford, FL (SFB) |
+      | origin              | destination                       |
+      | Asheville, NC (AVL) | Daytona Beach / Sanford, FL (SFB) |
+
+  Scenario: The user continues with the flight booking
+    Given user is on the flight results page
+    When user is displayed with flight details
+    Then user clicks continue
+
+  Scenario: The user selects bundles
+    Given user is on the bundles page
+    When user is displayed with bundle options
+    Then user clicks continue to select basic
+
+  Scenario: The user fills in passenger details
+  Given user is on the passenger details page
+  When user enters details and clicks continue
+  Then user is redirected to the next page

@@ -62,3 +62,48 @@ Then(/^user is redirected to results page$/, async () => {
 	await Page.checkRedirectionToResults();
 });
 
+
+//flight search results
+
+Given(/^user is on the flight results page$/, async () => {
+	await Page.checkRedirectionToResults();
+});
+
+When(/^user is displayed with flight details$/, async () => {
+	await Page.checkResultsView();
+});
+
+Then(/^user clicks continue$/, async () => {
+	await Page.clickContinueOnFlightsPage();
+	await Page.checkRedirectionToBundles();
+});
+
+//bundles
+
+Given(/^user is on the bundles page$/, async () => {
+	await Page.checkRedirectionToBundles();
+});
+
+When(/^user is displayed with bundle options$/, async () => {
+	await Page.checkBundlesView();
+});
+
+Then(/^user clicks continue to select basic$/, async () => {
+	await Page.clickContinueOnBundlesPage();
+	await Page.checkRedirectionToTravellers();
+});
+
+//travellers
+
+
+Given(/^user is on the passenger details page$/, async () => {
+	await Page.checkRedirectionToTravellers();
+});
+
+When(/^user enters details and clicks continue$/, async () => {
+	await Page.fillTravellerDetails();
+});
+
+Then(/^user is redirected to the next page$/, async () => {
+	return true;
+});
