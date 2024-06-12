@@ -1,7 +1,7 @@
 const {$} = require('@wdio/globals');
 const {Key} = require('webdriverio');
 
-const overlay = '//*[@overlay-merchandise_ice-pop_content]';
+const overlay = '//*[@data-hook="overlay-merchandise_ice-pop_content"]';
 const closebtn = '//*[@data-hook="overlay-merchandise_ice-pop_close"]';
 const cookieBanner = '//*[@id="onetrust-banner-sdk"]';
 const acceptAllCookiesBtn = '//*[@id="onetrust-accept-btn-handler"]';
