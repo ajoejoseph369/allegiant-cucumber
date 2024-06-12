@@ -52,12 +52,13 @@ Then(/^user selects (.*) for Destination Airport$/, async (destination) => {
 });
 
 
-Then(/^user selects first available date$/, async () => {
-	await Page.selectFirstAvailableDate();
-	//await Page.showAvailableDates();
+Then(/^user selects available dates for both origin and destination$/, async () => {
+	await Page.selectAvailableDates();
 });
 
 
-Then(/^success$/, async () => {
-	return true;
+Then(/^user is redirected to results page$/, async () => {
+	await Page.searchFlightsBtnClick();
+	await Page.checkRedirectionToResults();
 });
+

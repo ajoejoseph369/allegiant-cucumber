@@ -16,10 +16,9 @@ Feature: Test Allegiant website
     Given user is already on the homepage
     When user selects <origin> for Departure Airport
     Then user selects <destination> for Destination Airport
-    Then user selects first available date
-    Then success
+    Then user selects available dates for both origin and destination
+    Then user is redirected to results page
 
     Examples:
       | origin                 | destination                       |
       | Asheville, NC (AVL)    | Daytona Beach / Sanford, FL (SFB) |
-      | Akron-Canton, OH (CAK) | Las Vegas, NV (LAS)               |

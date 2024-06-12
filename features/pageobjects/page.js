@@ -7,9 +7,10 @@ const cookieBanner = '//*[@id="onetrust-banner-sdk"]';
 const acceptAllCookiesBtn = '//*[@id="onetrust-accept-btn-handler"]';
 const flightOrigin = '//*[@id="select-origin"]';
 const flightDestination = '//*[@id="select-destination"]';
-const calendar = "//*[@data-hook='flight-search-date-picker_calendars']";
-const datePicker = "//*[@data-hook='flight-search-date-picker_expand-start-date']";
+const Calendar = "//*[@data-hook='flight-search-date-picker_calendars']";
+const DatePicker = "//*[@data-hook='flight-search-date-picker_expand-start-date']";
 const dateButtons = 'button[data-hook^="flight-search-date-picker_calendar-0_select-day-"]';
+const flightSearchButton = "//button[@data-hook='flight-search-submit']";
 
 class Page{
     async goToPage(){
@@ -88,40 +89,38 @@ class Page{
         await browser.pause(3000);
     }
 
-    async selectFirstAvailableDate(){
-        await $(datePicker).click();
-        await $(calendar).isDisplayed();
-        
+    async selectAvailableDates(){
+        await $(DatePicker).click();
+        await $(Calendar).isDisplayed();
         const buttons = await $$(dateButtons);
+        let count = 0;
         for(const button of buttons){
+            console.log(`Count: "${count}"`);
             await button.isDisplayed();
-            if(await button.isEnabled()){
-                if(await button.isClickable()){
-                    const ariaLabel = await button.getAttribute('aria-label');
-                    console.log(`Button with label "${ariaLabel}" is enabled!`);
-                    await button.click();
+            if(await button.isClickable()){
+                const ariaLabel = await button.getAttribute('aria-label');
+                console.log(`Button with label "${ariaLabel}" is enabled!`);
+                await button.click();
+                await browser.pause(3000);
+                count = count + 1;
+                if(count==2)
+                {
                     break;
                 }
             }
         }
-        await browser.pause(4000);
     }
 
-    async showAvailableDates(){
-        await $(datePicker).click();
-        await $(calendar).isDisplayed();
-        
-        const buttons = await $$(dateButtons);
-        
-        for(const button of buttons){
-            const ariaLabel = await button.getAttribute('aria-label');
-            await button.isDisplayed();
-            if(await button.isEnabled()){
-                if(await button.isClickable()){
-                    console.log(`"${ariaLabel}"`);
-                }
-            }
-        }
+    async searchFlightsBtnClick(){
+        await $(flightSearchButton).click();
+    }
+
+    async checkRedirectionToResults(){
+        await browser.waitUntil(async ()=>{
+            const title = await browser.getTitle();
+            console.log(title);
+            return (title=="Flights")
+        },{timeout:5000})
     }
 }
 
