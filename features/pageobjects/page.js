@@ -18,8 +18,9 @@ const bundlesPageHeading = "//*[@data-hook='bundles-page_page-heading']";
 const firstName = "//*[@data-hook='travelers-form_adults_0_first-name']";
 const middleName = "//*[@data-hook='travelers-form_adults_0_middle-name']";
 const lastName = "//*[@data-hook='travelers-form_adults_0_last-name']";
-const suffix = "//*[@data-hook='travelers-form_adults_0_suffix']";
-const genderM = "//input[@type='radio' and @value='MALE']";
+const suffix = "//div[@data-hook='travelers-form_adults_0_suffix']";
+const suffixOption = "//div[@id='react-select-adults.0.suffix-option-3']";
+const genderM = "//label[@data-hook='travelers-form_adults_0_gender_MALE']";
 const dobMonth = "//input[@id='adults.0.dob-month']";
 const dobDay = "//input[@id='adults.0.dob-day']";
 const dobYear = "//input[@id='adults.0.dob-year']";
@@ -182,10 +183,12 @@ class Page{
     async fillTravellerDetails(){
         await $(firstName).setValue("Ajoe");
         await $(middleName).click();
-        await $(middleName).setValue("P10");
+        await $(middleName).setValue("PTen");
         await $(lastName).click();
         await $(lastName).setValue("Joseph");
-        await $(suffix).setValue("Jr.");
+        await $(suffix).click();
+        await $(suffixOption).waitForDisplayed();
+        await $(suffixOption).click();
         await $(genderM).click();
         await $(dobMonth).setValue("January");
         await browser.keys([Key.Enter]);
@@ -198,7 +201,7 @@ class Page{
         await $(phoneNumber).setValue("8304033184");
         await $(emailId).setValue("ajoejoseph99@gmail.com");
         await $(travellersPageContinueButton).click();   
-        await browser.pause(3000);
+        await browser.pause(8000);
     }
 }
 
