@@ -28,9 +28,11 @@ const phonePrefix = "//input[@id='adults.0.primary-phone-prefix']";
 const phoneNumber = "//input[@data-hook='travelers-form_adults_0_primary-phone-number']";
 const emailId = "//input[@data-hook='travelers-form_adults_0_email']";
 const travellersPageContinueButton = "//button[@data-hook='travelers-page_continue']";
-
-
-
+const legroomSeatsId = "//li/button[span[contains(@data-hook, 'select-legroom-plus-seat_front_')]]";
+const economySeatsId = "//li/button[span[contains(@data-hook, 'select-economy-seat_unrestricted_')]]";
+const legroomPlusExitSeatsId = "//li/div/button[div[span[contains(@data-hook, 'select-legroom-plus-seat_exit-row_')]]]";
+const returnSeat = "//button[@data-hook='seats-page-tabs_returning']";
+const continueOnSeatsPage = "//button[@data-hook='seats-page_continue-popup']";
 
 class Page{
     async goToPage(){
@@ -202,6 +204,55 @@ class Page{
         await $(emailId).setValue("ajoejoseph99@gmail.com");
         await $(travellersPageContinueButton).click();   
         await browser.pause(8000);
+    }
+
+    async checkRedirectionToSeats(){
+        await browser.waitUntil(async ()=>{
+            const title = await browser.getTitle();
+            console.log(title);
+            return(title=='Seats')
+        },{timeout:5000})
+        await browser.pause(3000);
+    }
+
+    async selectAvailableSeats(seat_type){
+        let count = 0;
+        const legroomSeats = await $$(legroomSeatsId);
+        const economySeats = await $$(economySeatsId);
+        const legroomPlusExitSeats = await $$(legroomPlusExitSeatsId);
+        
+        let seats = "";
+        if(seat_type=="Legroom"){
+            seats = legroomSeats;
+
+        }
+        else if(seat_type=="Economy"){
+            seats = economySeats;
+        }
+        else if(seat_type=="Legroom plus exit"){
+            seats = legroomPlusExitSeats;
+        }
+        
+        for(const seat of seats){
+            await seat.isDisplayed();
+            if(await seat.isClickable()){
+                const span = await seat.$('span');
+                const ariaLabel = await span.getAttribute('aria-label');
+                console.log(`Button with label "${ariaLabel}" is enabled`);
+                await seat.click();
+                await browser.pause(5000);
+                break;
+            }
+        }
+
+    }
+    
+    async bookReturnSeat(seat_type){
+        await returnSeat.waitForEnabled({timeout: 3000});
+        await returnSeat.click();
+        this.selectAvailableSeats(seat_type); 
+        await continueOnSeatsPage.click();
+        await browser.pause(5000);    
     }
 }
 

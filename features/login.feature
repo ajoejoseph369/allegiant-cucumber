@@ -34,6 +34,16 @@ Feature: Test Allegiant website
     Then user clicks continue to select basic
 
   Scenario: The user fills in passenger details
-  Given user is on the passenger details page
-  When user enters details and clicks continue
-  Then user is redirected to the next page
+    Given user is on the passenger details page
+    When user enters details and clicks continue
+    Then user is redirected to the next page
+
+  Scenario: The user has to select available seats
+    Given user is on the seats page
+    When user wishes to selects a <seat> seat
+    Then user clicks on a seat available under <seat> seats
+
+    Examples:
+      | seat              |
+      | Economy           |
+

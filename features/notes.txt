@@ -5,3 +5,11 @@ console.log(`Button with label "${ariaLabel}" is enabled!`);
 const dateButtons = 'button[data-hook^="flight-search-date-picker_calendar-0_select-day-"]';
       
       | Akron-Canton, OH (CAK) | Las Vegas, NV (LAS)               |
+
+      | Legroom           |
+      | Legroom plus exit |
+
+
+Legroom+ = select-legroom-plus-seat_front_1A
+Economy = select-economy-seat_unrestricted_15A
+Legroom + Exit rows = select-legroom-plus-seat_exit-row_12A

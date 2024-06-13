@@ -105,5 +105,21 @@ When(/^user enters details and clicks continue$/, async () => {
 });
 
 Then(/^user is redirected to the next page$/, async () => {
+	await Page.checkRedirectionToSeats();
+});
+
+//Seats
+
+
+Given(/^user is on the seats page$/, async () => {
+	return true;
+});
+
+When(/^user wishes to selects a (.*) seat$/, async (seat_type) => {
+	await Page.selectAvailableSeats(seat_type);
+	await Page.bookReturnSeat(seat_type);
+});
+
+Then(/^user clicks on a seat available under (.*) seats$/, async (seat_type) => {
 	return true;
 });
