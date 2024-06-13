@@ -36,7 +36,8 @@ const continueOnSeatsPage = "//button[@data-hook='seats-page_continue-popup']";
 
 class Page{
     async goToPage(){
-        await browser.url('https://www.allegiantair.com/');
+        await browser.url('https://www-qatnexusg4.okd.allegiantair.com/');
+        await browser.pause(30000);
     }
 
     async checkOverlayPresence(){
