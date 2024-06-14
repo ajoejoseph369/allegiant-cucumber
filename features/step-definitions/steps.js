@@ -1,7 +1,14 @@
 const { Given, When, Then } = require('@wdio/cucumber-framework');
 
 const Page = require("../pageobjects/page.js");
-
+const Flights = require("../pageobjects/flights.js");
+const Bundles = require("../pageobjects/bundles.js");
+const Travellers = require("../pageobjects/travellers.js");
+const Seats = require("../pageobjects/seats.js");
+const Bags = require("../pageobjects/bags.js");
+const Hotels = require("../pageobjects/hotels.js");
+const Cars = require("../pageobjects/cars.js");
+const Payments = require("../pageobjects/payments.js");
 
 //overlay promotion
 Given(/^user is on the homepage$/, async () => {
@@ -59,117 +66,117 @@ Then(/^user selects available dates for both origin and destination$/, async () 
 
 Then(/^user is redirected to results page$/, async () => {
 	await Page.searchFlightsBtnClick();
-	await Page.checkRedirectionToResults();
+	await Flights.checkRedirectionToResults();
 });
 
 
 //flight search results
 
 Given(/^user is on the flight results page$/, async () => {
-	await Page.checkRedirectionToResults();
+	await Flights.checkRedirectionToResults();
 });
 
 When(/^user is displayed with flight details$/, async () => {
-	await Page.checkResultsView();
+	await Flights.checkResultsView();
 });
 
 Then(/^user clicks continue$/, async () => {
-	await Page.clickContinueOnFlightsPage();
-	await Page.checkRedirectionToBundles();
+	await Flights.clickContinueOnFlightsPage();
+	await Bundles.checkRedirectionToBundles();
 });
 
 //bundles
 
 Given(/^user is on the bundles page$/, async () => {
-	await Page.checkRedirectionToBundles();
+	await Bundles.checkRedirectionToBundles();
 });
 
 When(/^user is displayed with bundle options$/, async () => {
-	await Page.checkBundlesView();
+	await Bundles.checkBundlesView();
 });
 
 Then(/^user clicks continue to select basic$/, async () => {
-	await Page.clickContinueOnBundlesPage();
-	await Page.checkRedirectionToTravellers();
+	await Bundles.clickContinueOnBundlesPage();
+	await Travellers.checkRedirectionToTravellers();
 });
 
 //travellers
 
 
 Given(/^user is on the passenger details page$/, async () => {
-	await Page.checkRedirectionToTravellers();
+	await Travellers.checkRedirectionToTravellers();
 });
 
 When(/^user enters details and clicks continue$/, async () => {
-	await Page.fillTravellerDetails();
+	await Travellers.fillTravellerDetails();
 });
 
 Then(/^user is redirected to the next page$/, async () => {
-	await Page.checkRedirectionToSeats();
+	await Seats.checkRedirectionToSeats();
 });
 
 //Seats
 
 
 Given(/^user is on the seats page$/, async () => {
-	await Page.checkRedirectionToSeats();
+	await Seats.checkRedirectionToSeats();
 });
 
 When(/^user selects a (.*) seat$/, async (seat_type) => {
-	await Page.selectAvailableSeats(seat_type);
+	await Seats.selectAvailableSeats(seat_type);
 });
 
 Then(/^user selects a (.*) seat for return journey$/, async (seat_type) => {
-	await Page.bookReturnSeat(seat_type);
+	await Seats.bookReturnSeat(seat_type);
 });
 
 Then(/^user clicks continue to go to bags page$/, async () => {
-	await Page.checkRedirectionToBags();
+	await Bags.checkRedirectionToBags();
 });
 
 //Bags and Extras
 
 
 Given(/^user is on the bags page$/, async () => {
-	await Page.checkRedirectionToBags();
+	await Bags.checkRedirectionToBags();
 });
 
 When(/^user clicks continue on bags page$/, async () => {
-	await Page.continueToHotelsPage();
+	await Bags.continueToHotelsPage();
 });
 
 Then(/^user is redirected to hotels page$/, async () => {
-	await Page.checkRedirectionToHotels();
+	await Hotels.checkRedirectionToHotels();
 });
 
 //Hotels
 
 
 Given(/^user is on the hotels page$/, async () => {
-	await Page.checkRedirectionToHotels();
+	await Hotels.checkRedirectionToHotels();
 });
 
 When(/^user clicks on continue on hotels page$/, async () => {
-	await Page.continueToCarsPage();
+	await Hotels.continueToCarsPage();
 });
 
 Then(/^user is redirected to cars page$/, async () => {
-	await Page.checkRedirectionToCars();;
+	await Cars.checkRedirectionToCars();;
 });
 
 //Cars
 
 
 Given(/^user is on the cars page$/, async () => {
-	await Page.checkRedirectionToCars();
+	await Cars.checkRedirectionToCars();
 });
 
 When(/^user clicks on continue on cars page$/, async () => {
-	await Page.continueToPaymentsPage();
+	await Cars.continueToPaymentsPage();
 });
 
 Then(/^user is redirected to Payments page$/, async () => {
-	await Page.checkRedirectionToPayments();
+	await Payments.checkRedirectionToPayments();
 });
 
 
@@ -177,10 +184,10 @@ Then(/^user is redirected to Payments page$/, async () => {
 
 
 Given(/^user is on the payments page$/, async () => {
-	await Page.checkRedirectionToPayments();
+	await Payments.checkRedirectionToPayments();
 });
 
 Then(/^user is displayed with the payment details$/, async () => {
-	await Page.closePopUpOnPaymentsPage();
+	await Payments.closePopUpOnPaymentsPage();
 });
 
