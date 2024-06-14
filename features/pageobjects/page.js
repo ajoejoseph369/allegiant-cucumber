@@ -31,13 +31,13 @@ const travellersPageContinueButton = "//button[@data-hook='travelers-page_contin
 const legroomSeatsId = "//li/button[span[contains(@data-hook, 'select-legroom-plus-seat_front_')]]";
 const economySeatsId = "//li/button[span[contains(@data-hook, 'select-economy-seat_unrestricted_')]]";
 const legroomPlusExitSeatsId = "//li/div/button[div[span[contains(@data-hook, 'select-legroom-plus-seat_exit-row_')]]]";
-const returnSeat = "//button[@data-hook='seats-page-tabs_returning']";
+const returnSeat = '//button[@data-hook="seats-select-returning"]';
 const continueOnSeatsPage = "//button[@data-hook='seats-page_continue-popup']";
 
 class Page{
     async goToPage(){
         await browser.url('https://www-qatnexusg4.okd.allegiantair.com/');
-        await browser.pause(30000);
+        await browser.maximizeWindow();
     }
 
     async checkOverlayPresence(){
@@ -249,11 +249,11 @@ class Page{
     }
     
     async bookReturnSeat(seat_type){
-        await returnSeat.waitForEnabled({timeout: 3000});
-        await returnSeat.click();
+        await $(returnSeat).click();
+        await browser.pause(5000);
         this.selectAvailableSeats(seat_type); 
-        await continueOnSeatsPage.click();
-        await browser.pause(5000);    
+        await $(continueOnSeatsPage).click();
+        await browser.pause(10000);    
     }
 }
 
