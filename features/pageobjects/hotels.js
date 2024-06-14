@@ -5,7 +5,7 @@ const continueOnHotelsPage = "//button[@data-hook='hotels-page_continue']";
 
 class Hotels{
     async checkRedirectionToHotels(){
-        await browser.pause(2000);    
+        await browser.pause(3000);    
         await browser.waitUntil(async ()=>{
             const title = await browser.getTitle();
             console.log(title);

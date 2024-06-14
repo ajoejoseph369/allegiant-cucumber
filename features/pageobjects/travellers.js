@@ -17,12 +17,13 @@ const travellersPageContinueButton = "//button[@data-hook='travelers-page_contin
 
 class Travellers{
     async checkRedirectionToTravellers(){
+        await browser.pause(5000);
         await browser.waitUntil(async ()=>{
             const title = await browser.getTitle();
             console.log(title);
             return(title=='Travelers')
         },{timeout:5000})
-        await browser.pause(3000);
+        await browser.pause(6000);
     }
 
     async fillTravellerDetails(){

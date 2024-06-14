@@ -95,13 +95,12 @@ When(/^user is displayed with bundle options$/, async () => {
 	await Bundles.checkBundlesView();
 });
 
-Then(/^user clicks continue to select basic$/, async () => {
-	await Bundles.clickContinueOnBundlesPage();
-	await Travellers.checkRedirectionToTravellers();
+
+Then(/^user selects (.*) as bundle$/, async (bundle_type) => {
+	await Bundles.selectBundleType(bundle_type);
 });
 
 //travellers
-
 
 Given(/^user is on the passenger details page$/, async () => {
 	await Travellers.checkRedirectionToTravellers();
@@ -140,6 +139,12 @@ Then(/^user clicks continue to go to bags page$/, async () => {
 Given(/^user is on the bags page$/, async () => {
 	await Bags.checkRedirectionToBags();
 });
+
+
+When(/^user selects (.*) carry-on bags and (.*) checked-in bags$/, async (carry_on,checked_in) => {
+	await Bags.selectBags(carry_on,checked_in);
+});
+
 
 When(/^user clicks continue on bags page$/, async () => {
 	await Bags.continueToHotelsPage();

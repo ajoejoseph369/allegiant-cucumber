@@ -22,6 +22,7 @@ Feature: Test Allegiant website
     Examples:
       | origin              | destination                       |
       | Asheville, NC (AVL) | Daytona Beach / Sanford, FL (SFB) |
+      # | Akron-Canton, OH (CAK) | Las Vegas, NV (LAS)               |
 
   Scenario: The user continues with the flight booking
     Given user is on the flight results page
@@ -31,7 +32,13 @@ Feature: Test Allegiant website
   Scenario: The user selects bundles
     Given user is on the bundles page
     When user is displayed with bundle options
-    Then user clicks continue to select basic
+    Then user selects <bundle_type> as bundle
+
+    Examples:
+      | bundle_type |
+      # | bonus       |
+      # | basic       |
+      | total       |
 
   Scenario: The user fills in passenger details
     Given user is on the passenger details page
@@ -50,8 +57,13 @@ Feature: Test Allegiant website
 
   Scenario: The user has to select bags and extras
     Given user is on the bags page
+    When user selects <carry_on> carry-on bags and <checked_in> checked-in bags
     When user clicks continue on bags page
     Then user is redirected to hotels page
+
+    Examples:
+      | carry_on | checked_in |
+      |        1 |          2 |
 
   Scenario: The user has to select hotels
     Given user is on the hotels page

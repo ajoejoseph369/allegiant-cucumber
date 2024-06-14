@@ -53,7 +53,7 @@ class Seats{
     
     async bookReturnSeat(seat_type){
         await $(returnSeat).click();
-        await browser.pause(5000);
+        await browser.pause(6000);
         this.selectAvailableSeats(seat_type); 
         await browser.pause(5000);    
         await $(continueOnSeatsPage).click();
