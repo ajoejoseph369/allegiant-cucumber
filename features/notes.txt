@@ -4,7 +4,8 @@ console.log(`Button with label "${ariaLabel}" is enabled!`);
 ^= is called the starts with operator which is used to denote the string starts with another string
 const dateButtons = 'button[data-hook^="flight-search-date-picker_calendar-0_select-day-"]';
       
-      | Akron-Canton, OH (CAK) | Las Vegas, NV (LAS)               |
+      | Akron-Canton, OH (CAK) | Las Vegas, NV (LAS) |
+
 
       | Legroom           |
       | Legroom plus exit |
