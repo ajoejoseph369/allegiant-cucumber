@@ -33,10 +33,18 @@ const economySeatsId = "//li/button[span[contains(@data-hook, 'select-economy-se
 const legroomPlusExitSeatsId = "//li/div/button[div[span[contains(@data-hook, 'select-legroom-plus-seat_exit-row_')]]]";
 const returnSeat = '//button[@data-hook="seats-select-returning"]';
 const continueOnSeatsPage = "//button[@data-hook='seats-page_continue-popup']";
+const continueOnBagsPage = '//button[@data-hook="ancillaries-page_continue-popup"]';
+const continueInPopUp = '//button[@data-hook="ancillaries-continue-popup_button_continue"]';
+const continueOnHotelsPage = "//button[@data-hook='hotels-page_continue']";
+const continueOnCarsPage = "//button[@data-hook='cars-page_continue']";
+const paymentsPagePopUp = "//*[@data-hook='payment-page_ice-popup' and @role='status']";
+const paymentsPagePopUpClose = "//button[@data-hook='payment-page_ice-popup_close']";
+const paymentsPageHeading = "//*[@data-hook='payment-page_page-heading']";
 
 class Page{
     async goToPage(){
         await browser.url('https://www-qatnexusg4.okd.allegiantair.com/');
+        // await browser.url('https://www.allegiantair.com/');
         await browser.maximizeWindow();
     }
 
@@ -255,6 +263,65 @@ class Page{
         await $(continueOnSeatsPage).click();
         await browser.pause(10000);    
     }
+
+    async checkRedirectionToBags(){
+        await browser.waitUntil(async ()=>{
+            const title = await browser.getTitle();
+            console.log(title);
+            return(title=='Bags and Extras');
+        },{timeout:5000})
+        await browser.pause(3000);
+    }
+
+    async continueToHotelsPage(){
+        await $(continueOnBagsPage).click();
+        await $(continueInPopUp).waitForDisplayed();
+        await $(continueInPopUp).click();
+        await browser.pause(4000);
+    }
+
+    async checkRedirectionToHotels(){
+        await browser.waitUntil(async ()=>{
+            const title = await browser.getTitle();
+            console.log(title);
+            return(title=="Hotels");
+        },{timeout:5000});
+        await browser.pause(3000);
+    }
+
+    async continueToCarsPage(){
+        await $(continueOnHotelsPage).click();
+    }
+
+    async checkRedirectionToCars(){
+        await browser.waitUntil(async ()=>{
+            const title = await browser.getTitle();
+            console.log(title);
+            return(title=="Cars");
+        },{timeout:5000});
+        await browser.pause(3000);
+    }
+
+    async continueToPaymentsPage(){
+        await $(continueOnCarsPage).click();
+    }
+
+    async checkRedirectionToPayments(){
+        await browser.waitUntil(async ()=>{
+            const title = await browser.getTitle();
+            console.log(title);
+            return(title=="Payment");
+        },{timeout:5000});
+        await browser.pause(3000);
+    }
+
+    async closePopUpOnPaymentsPage(){
+        if(await $(paymentsPagePopUp).isDisplayed()){
+            await $(paymentsPagePopUpClose).click();
+        }
+        return(await $(paymentsPageHeading)=='Review & Payment');
+    }
+
 }
 
 module.exports = new Page();    

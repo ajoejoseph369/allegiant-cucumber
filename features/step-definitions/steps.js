@@ -112,14 +112,75 @@ Then(/^user is redirected to the next page$/, async () => {
 
 
 Given(/^user is on the seats page$/, async () => {
-	return true;
+	await Page.checkRedirectionToSeats();
 });
 
-When(/^user wishes to selects a (.*) seat$/, async (seat_type) => {
+When(/^user selects a (.*) seat$/, async (seat_type) => {
 	await Page.selectAvailableSeats(seat_type);
+});
+
+Then(/^user selects a (.*) seat for return journey$/, async (seat_type) => {
 	await Page.bookReturnSeat(seat_type);
 });
 
-Then(/^user clicks on a seat available under (.*) seats$/, async (seat_type) => {
-	return true;
+Then(/^user clicks continue to go to bags page$/, async () => {
+	await Page.checkRedirectionToBags();
 });
+
+//Bags and Extras
+
+
+Given(/^user is on the bags page$/, async () => {
+	await Page.checkRedirectionToBags();
+});
+
+When(/^user clicks continue on bags page$/, async () => {
+	await Page.continueToHotelsPage();
+});
+
+Then(/^user is redirected to hotels page$/, async () => {
+	await Page.checkRedirectionToHotels();
+});
+
+//Hotels
+
+
+Given(/^user is on the hotels page$/, async () => {
+	await Page.checkRedirectionToHotels();
+});
+
+When(/^user clicks on continue on hotels page$/, async () => {
+	await Page.continueToCarsPage();
+});
+
+Then(/^user is redirected to cars page$/, async () => {
+	await Page.checkRedirectionToCars();;
+});
+
+//Cars
+
+
+Given(/^user is on the cars page$/, async () => {
+	await Page.checkRedirectionToCars();
+});
+
+When(/^user clicks on continue on cars page$/, async () => {
+	await Page.continueToPaymentsPage();
+});
+
+Then(/^user is redirected to Payments page$/, async () => {
+	await Page.checkRedirectionToPayments();
+});
+
+
+//Payments
+
+
+Given(/^user is on the payments page$/, async () => {
+	await Page.checkRedirectionToPayments();
+});
+
+Then(/^user is displayed with the payment details$/, async () => {
+	await Page.closePopUpOnPaymentsPage();
+});
+

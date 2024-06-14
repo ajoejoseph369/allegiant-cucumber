@@ -40,10 +40,29 @@ Feature: Test Allegiant website
 
   Scenario: The user has to select available seats
     Given user is on the seats page
-    When user wishes to selects a <seat> seat
-    Then user clicks on a seat available under <seat> seats
+    When user selects a <seat> seat
+    Then user selects a <seat> seat for return journey
+    Then user clicks continue to go to bags page
 
     Examples:
-      | seat              |
-      | Economy           |
+      | seat    |
+      | Economy |
 
+  Scenario: The user has to select bags and extras
+    Given user is on the bags page
+    When user clicks continue on bags page
+    Then user is redirected to hotels page
+
+  Scenario: The user has to select hotels
+    Given user is on the hotels page
+    When user clicks on continue on hotels page
+    Then user is redirected to cars page
+
+  Scenario: The user has to select cars
+    Given user is on the cars page
+    When user clicks on continue on cars page
+    Then user is redirected to Payments page
+
+  Scenario: The user is displayed with payment information
+    Given user is on the payments page
+    Then user is displayed with the payment details
