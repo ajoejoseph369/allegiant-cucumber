@@ -1,7 +1,9 @@
 const {$} = require('@wdio/globals');
 const {Key} = require('webdriverio');
 
-const continueOnBagsPage = '//button[@data-hook="ancillaries-page_continue-popup"]';
+const continueOnBagsPageWithPopUp = '//button[@data-hook="ancillaries-page_continue-popup"]';
+const continueOnBagsPageWithoutPopUp = '//button[@data-hook="ancillaries-page_continue"]';
+const popupOnBagsPage = "//div[@data-hook='ancillaries-continue-popup']";
 const continueInPopUp = '//button[@data-hook="ancillaries-continue-popup_button_continue"]';
 const carryOnBagCount = '//input[@data-hook="ancillaries-page-traveler_0_carry-on"]';
 const checkedBagCount = '//input[@data-hook="ancillaries-page-traveler_0_checked-in"]';
@@ -21,22 +23,32 @@ class Bags{
 
     async continueToHotelsPage(){
         await browser.pause(4000);
-        await $(continueOnBagsPage).click();
-        await $(continueInPopUp).waitForDisplayed();
-        await $(continueInPopUp).click();
-        await browser.pause(2000);    
+        
+        if(await $(continueOnBagsPageWithoutPopUp).isEnabled()){
+            await $(continueOnBagsPageWithoutPopUp).click();
+        }
 
+        else if(await $(continueOnBagsPageWithPopUp).isEnabled()){
+            await $(continueOnBagsPageWithPopUp).click();
+            if(await $(popupOnBagsPage).isDisplayed()){
+                await $(continueInPopUp).waitForDisplayed();
+                await $(continueInPopUp).click();
+            }
+        }        
+        await browser.pause(4000);    
     }
 
     async selectBags(carry_on,checked_in){
-        const carrybagcount = await $(carryOnBagCount).getValue();;
-        const checkedbagcount = await $(checkedBagCount).getValue();
+        let carrybagcount = parseInt(await $(carryOnBagCount).getValue());
+        let checkedbagcount = parseInt(await $(checkedBagCount).getValue());
         console.log(`Carry: "${carrybagcount}", Check: ${checkedbagcount}"`);
         while (carrybagcount<carry_on){
             await $(carryOnBagIncrementBtn).click();
+            carrybagcount = parseInt(await $(carryOnBagCount).getValue());
         }
         while(checkedbagcount<checked_in){
             await $(checkedBagCountIncrementBtn).click();
+            checkedbagcount = parseInt(await $(checkedBagCount).getValue());
         }
     }
 

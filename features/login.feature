@@ -36,9 +36,9 @@ Feature: Test Allegiant website
 
     Examples:
       | bundle_type |
+      | basic       |
       # | bonus       |
-      # | basic       |
-      | total       |
+      # | total       |
 
   Scenario: The user fills in passenger details
     Given user is on the passenger details page
